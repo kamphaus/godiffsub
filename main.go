@@ -16,6 +16,7 @@ import (
 	"io"
 	"os"
 
+	"github.com/kamphaus/godiffsub/diff"
 	"github.com/kamphaus/godiffsub/program"
 )
 
@@ -37,6 +38,7 @@ func (i *inputDataFlags) Set(value string) error {
 
 var (
 	versionFlag = flag.Bool("v", false, "print the version and exit")
+	verboseFlag = flag.Bool("V", false, "print progress as comments")
 	helpFlag    = flag.Bool("h", false, "print help information")
 	srcFlags    inputDataFlags
 	fromFlags   inputDataFlags
@@ -69,8 +71,19 @@ func runCommand() int {
 		return 0
 	}
 
-	if flag.NArg() < 1 || *helpFlag {
+	if *helpFlag {
 		flag.Usage()
+		return 1
+	}
+
+	args := &diff.Arguments{
+		Src:     srcFlags,
+		From:    fromFlags,
+		Verbose: *verboseFlag,
+	}
+	err := args.DiffSub()
+	if err != nil {
+		fmt.Fprintf(stderr, "Error performing diff-sub operation: %v\n", err)
 		return 1
 	}
 
