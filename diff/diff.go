@@ -30,6 +30,11 @@ func (a *Arguments) DiffSub() error {
 	if a.Verbose {
 		fmt.Println("Found symbols:")
 		a.printSymbols()
+		fmt.Println("Removing duplicate symbols...")
 	}
-	return errors.New("not yet implemented")
+	total, err := a.removeSymbols()
+	if a.Verbose && len(a.From) > 1 {
+		fmt.Println(fmt.Sprintf("Removed total number of duplicate symbols: %v", total))
+	}
+	return err
 }
