@@ -4,14 +4,22 @@ import (
 	"os"
 	"fmt"
 	"errors"
+	"strings"
 )
 
 func checkFile(file string) error {
-	if _, err := os.Stat(file); err != nil {
+	if s, err := os.Stat(file); err != nil {
 		if os.IsNotExist(err) {
 			return fmt.Errorf("could not find file: %s", file)
 		}
 		return fmt.Errorf("file error: %v", err)
+	} else {
+		if s.IsDir() {
+			return fmt.Errorf("is a directory: %s", file)
+		}
+		if !strings.HasSuffix(s.Name(), ".go") {
+			return fmt.Errorf("is not a Go file: %s", file)
+		}
 	}
 	if file, err := os.Open(file); err != nil {
 		return fmt.Errorf("could not open file: %v", err)
