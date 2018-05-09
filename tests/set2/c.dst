@@ -1,0 +1,17 @@
+package main
+
+var i int = 42
+
+func tt() {}
+
+func Funct1() {
+	var c string
+}
+
+var (
+	z int = 6
+)
+
+func main() {
+	var d bool = true
+}

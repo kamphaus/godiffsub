@@ -1,0 +1,41 @@
+package main
+
+type a struct {
+}
+
+type (
+	b interface {
+		Funct1()
+	}
+)
+
+var c string
+var (
+	d bool
+	E int
+)
+
+var i int = 42
+
+const f float32 = 1.0
+const (
+	G = true
+)
+
+func RR() {
+    var z int
+}
+
+func tt() {}
+
+func Funct1() {
+	var c string
+}
+
+var (
+	z int = 6
+)
+
+func main() {
+	var d bool = true
+}

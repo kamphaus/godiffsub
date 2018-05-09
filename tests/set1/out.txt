@@ -1,0 +1,14 @@
+Considering src file: tests/set1/a.go
+Considering from file: tests/set1/b.go
+Parsing src files...
+Found symbols:
+E
+G
+RR
+a
+b
+c
+d
+f
+Removing duplicate symbols...
+Removed 8 duplicate symbols from tests/set1/b.go
