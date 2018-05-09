@@ -18,6 +18,7 @@ import (
 
 	"github.com/kamphaus/godiffsub/diff"
 	"github.com/kamphaus/godiffsub/program"
+	"strings"
 )
 
 var stderr io.Writer = os.Stderr
@@ -82,6 +83,12 @@ func runCommand() int {
 		Verbose: *verboseFlag,
 	}
 	err := args.DiffSub()
+	if err == diff.NotEnoughSrcFiles || err == diff.NotEnoughFromFiles {
+		msg := err.Error()
+		fmt.Fprintf(stderr, "%s%s.\n", strings.ToUpper(msg[0:1]), msg[1:])
+		flag.Usage()
+		return 1
+	}
 	if err != nil {
 		fmt.Fprintf(stderr, "Error performing diff-sub operation: %v\n", err)
 		return 1

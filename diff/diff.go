@@ -1,7 +1,6 @@
 package diff
 
 import (
-	"fmt"
 	"errors"
 )
 
@@ -14,14 +13,14 @@ type Arguments struct {
 }
 
 func (a Arguments) DiffSub() error {
-	if a.Verbose {
-		for _, src := range a.Src {
-			fmt.Println(fmt.Sprintf("Considering %s src file.", src))
-		}
-		for _, from := range a.From {
-			fmt.Println(fmt.Sprintf("Considering %s from file.", from))
-		}
+	if len(a.Src) == 0 {
+		return NotEnoughSrcFiles
+	}
+	if len(a.From) == 0 {
+		return NotEnoughFromFiles
+	}
+	if err := a.checkFiles(); err != nil {
+		return errors.New("could not read all files")
 	}
 	return errors.New("not yet implemented")
 }
-
