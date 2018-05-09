@@ -2,6 +2,7 @@ package diff
 
 import (
 	"errors"
+	"fmt"
 )
 
 // Arguments to the diff-sub algorithm
@@ -12,7 +13,7 @@ type Arguments struct {
 	symbols map[string]struct{} // symbols found in src
 }
 
-func (a Arguments) DiffSub() error {
+func (a *Arguments) DiffSub() error {
 	if len(a.Src) == 0 {
 		return NotEnoughSrcFiles
 	}
@@ -21,6 +22,14 @@ func (a Arguments) DiffSub() error {
 	}
 	if err := a.checkFiles(); err != nil {
 		return errors.New("could not read all files")
+	}
+	if a.Verbose {
+		fmt.Println("Parsing src files...")
+	}
+	a.readSymbols()
+	if a.Verbose {
+		fmt.Println("Found symbols:")
+		a.printSymbols()
 	}
 	return errors.New("not yet implemented")
 }
