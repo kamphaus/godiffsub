@@ -45,14 +45,14 @@ func TestDiffSub(t *testing.T) {
 }
 
 type diffTest struct {
-	diff.Arguments
+	*diff.Arguments
 	tempDir      string
 	testName     string
 	mapFrom2Dest map[string]string
 	output       string
 }
 
-func runTest(t *testing.T, test diffTest) {
+func runTest(t *testing.T, test *diffTest) {
 	err := test.DiffSub()
 	if err != nil {
 		t.Error(err)
@@ -91,19 +91,23 @@ func compareFiles(t *testing.T, a string, b string) {
 	}
 }
 
-func prepareTest(t *testing.T, testDir string) (a diffTest) {
+func prepareTest(t *testing.T, testDir string) (a *diffTest) {
 	dir, err := ioutil.TempDir("", "godiffsub-test")
 	if err != nil {
 		t.Fatalf("Cannot create temp folder: %v", err)
 	}
-	a.tempDir = dir
+	a = &diffTest{
+		Arguments: &diff.Arguments{
+			Verbose: true,
+			Stdout: &bytes.Buffer{},
+		},
+		mapFrom2Dest: make(map[string]string),
+		tempDir: dir,
+	}
 	files, err := ioutil.ReadDir(testDir)
 	if err != nil {
 		t.Error(err)
 	}
-	a.Verbose = true
-	a.mapFrom2Dest = make(map[string]string)
-	a.Stdout = &bytes.Buffer{}
 	for _, f := range files {
 		dstFile := filepath.Join(dir, f.Name())
 		ext := path.Ext(dstFile)

@@ -81,8 +81,10 @@ func (a *Arguments) removeSymbolsFromFile(fileName string) (int, error) {
 			}
 			n.Names = newNames
 			removeIfEmptyNames(cursor, n)
+			return false
 		case *ast.TypeSpec:
 			removeIfSymbolExists(cursor, n.Name)
+			return false
 		}
 		return true
 	}
