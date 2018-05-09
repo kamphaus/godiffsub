@@ -71,6 +71,6 @@ func (a Arguments) printSymbols() {
 	}
 	sort.Strings(symbols)
 	for _, s := range symbols {
-		fmt.Println(s)
+		fmt.Fprintf(a.Stdout, "%s\n", s)
 	}
 }

@@ -20,10 +20,10 @@ func (a *Arguments) removeSymbols() (int, error) {
 		if e != nil {
 			err = e
 			if a.Verbose {
-				fmt.Println(fmt.Sprintf("Error removing symobls from file \"%s\": %v", from, e))
+				fmt.Fprintf(a.Stdout, "Error removing symobls from file \"%s\": %v\n", from, e)
 			}
 		} else if a.Verbose {
-			fmt.Println(fmt.Sprintf("Removed %v duplicate symbols from %s", dup, from))
+			fmt.Fprintf(a.Stdout, "Removed %v duplicate symbols from %s\n", dup, from)
 		}
 	}
 	return totalDuplicateSymbols, err

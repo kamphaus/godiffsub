@@ -3,6 +3,7 @@ package diff
 import (
 	"errors"
 	"fmt"
+	"io"
 )
 
 // Arguments to the diff-sub algorithm
@@ -10,6 +11,7 @@ type Arguments struct {
 	Src  []string // the files whose function, constant and variable declarations should be considered
 	From []string // the files from where the considered declarations should be removed
 	Verbose bool  // whether to output debug statements
+	Stdout  io.Writer // where to write the debug statements
 	symbols map[string]struct{} // symbols found in src
 }
 
@@ -24,17 +26,17 @@ func (a *Arguments) DiffSub() error {
 		return errors.New("could not read all files")
 	}
 	if a.Verbose {
-		fmt.Println("Parsing src files...")
+		fmt.Fprintf(a.Stdout, "Parsing src files...\n")
 	}
 	a.readSymbols()
 	if a.Verbose {
-		fmt.Println("Found symbols:")
+		fmt.Fprintf(a.Stdout, "Found symbols:\n")
 		a.printSymbols()
-		fmt.Println("Removing duplicate symbols...")
+		fmt.Fprintf(a.Stdout, "Removing duplicate symbols...\n")
 	}
 	total, err := a.removeSymbols()
 	if a.Verbose && len(a.From) > 1 {
-		fmt.Println(fmt.Sprintf("Removed total number of duplicate symbols: %v", total))
+		fmt.Fprintf(a.Stdout, "Removed total number of duplicate symbols: %v\n", total)
 	}
 	return err
 }

@@ -34,23 +34,23 @@ func checkFile(file string) error {
 func (a Arguments) checkFiles() (err error) {
 	for _, src := range a.Src {
 		if a.Verbose {
-			fmt.Println(fmt.Sprintf("Considering src file: %s", src))
+			fmt.Fprintf(a.Stdout, "Considering src file: %s\n", src)
 		}
 		if e := checkFile(src); e != nil {
 			err = e
 			if a.Verbose {
-				fmt.Println(fmt.Sprintf("%v", e))
+				fmt.Fprintf(a.Stdout, "%v\n", e)
 			}
 		}
 	}
 	for _, from := range a.From {
 		if a.Verbose {
-			fmt.Println(fmt.Sprintf("Considering from file: %s", from))
+			fmt.Fprintf(a.Stdout, "Considering from file: %s\n", from)
 		}
 		if e := checkFile(from); e != nil {
 			err = e
 			if a.Verbose {
-				fmt.Println(fmt.Sprintf("%v", e))
+				fmt.Fprintf(a.Stdout, "%v\n", e)
 			}
 		}
 	}

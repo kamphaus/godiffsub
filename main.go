@@ -81,6 +81,7 @@ func runCommand() int {
 		Src:     srcFlags,
 		From:    fromFlags,
 		Verbose: *verboseFlag,
+		Stdout:  os.Stdout,
 	}
 	err := args.DiffSub()
 	if err == diff.NotEnoughSrcFiles || err == diff.NotEnoughFromFiles {
