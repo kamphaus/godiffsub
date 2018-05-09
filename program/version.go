@@ -13,5 +13,5 @@ package program
 //      You will now need to edit it, the release name will be the same as the tag.
 //      The description should contain bullet points of each of the pull requests and issues resolves in this patch.
 //
-const Version = "v0.0.1 2018-05-08"
+const Version = "v1.0.0 2018-05-09"
 
